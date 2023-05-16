@@ -33,7 +33,7 @@ public class ListaItinerarios extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if(intent != null){
-            Ciudad ciudad=(Ciudad) intent.getSerializableExtra(CiudadViewHolder.EXTRA_OBJETO_REGION);
+            Ciudad ciudad=(Ciudad) intent.getSerializableExtra(CiudadViewHolder.EXTRA_OBJETO_CIUDAD);
             ciudad_elegida= ciudad.getNombre();
             setContentView(R.layout.activity_lista_itinerarios);
             rv_itinerario = findViewById(R.id.rv_itinerario);

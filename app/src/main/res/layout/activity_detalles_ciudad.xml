@@ -10,7 +10,7 @@
         android:id="@+id/edt_detalles_nombre"
         android:layout_width="331dp"
         android:layout_height="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Nombre"
         android:inputType="textPersonName"
@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.575"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <EditText
         android:id="@+id/edt_detalles_descripcion"
@@ -40,7 +40,7 @@
         android:layout_height="67dp"
         android:layout_marginBottom="48dp"
         android:onClick="detalles_editar_ciudad"
-        android:text="Ver Mapa"
+        android:text="Ver Itinerarios"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -57,13 +57,15 @@
         app:srcCompat="@drawable/avatar" />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:layout_width="407dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="4dp"
         android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 </androidx.constraintlayout.widget.ConstraintLayout>

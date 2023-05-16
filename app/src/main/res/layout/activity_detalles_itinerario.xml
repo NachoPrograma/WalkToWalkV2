@@ -7,44 +7,44 @@
     tools:context=".activities.DetallesItinerario">
 
     <TextView
-        android:id="@+id/txt_detalles_regionp"
-        android:layout_width="223dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="20dp"
+        android:id="@+id/txt_detalles_ciudadp"
+        android:layout_width="328dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.824"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_detalles_nombrep" />
 
     <TextView
-        android:id="@+id/txt_detalles_statsp"
-        android:layout_width="226dp"
-        android:layout_height="54dp"
+        android:id="@+id/txt_detalles_plazasp"
+        android:layout_width="338dp"
+        android:layout_height="53dp"
         android:layout_marginTop="24dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.837"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_detalles_regionp" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_detalles_ciudadp" />
 
     <TextView
         android:id="@+id/txt_detalles_nombrep"
-        android:layout_width="231dp"
-        android:layout_height="53dp"
+        android:layout_width="339dp"
+        android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.861"
+        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_detalles_idp" />
 
     <ImageView
         android:id="@+id/img_detalle_region"
-        android:layout_width="279dp"
-        android:layout_height="176dp"
+        android:layout_width="205dp"
+        android:layout_height="167dp"
         android:layout_marginTop="48dp"
-        android:background="@drawable/logo"
+        android:background="@drawable/avatar"
         android:contentDescription="imagen detalle ciudad"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -53,13 +53,24 @@
 
     <TextView
         android:id="@+id/txt_detalles_idp"
-        android:layout_width="225dp"
+        android:layout_width="359dp"
         android:layout_height="56dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.833"
+        app:layout_constraintHorizontal_bias="0.519"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_detalle_region" />
+
+    <Button
+        android:id="@+id/bt_mapa"
+        android:layout_width="216dp"
+        android:layout_height="77dp"
+        android:layout_marginTop="92dp"
+        android:text="Ver Mapa"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_detalles_plazasp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,7 @@ import com.example.walktowalk.clases.Ciudad;
 import java.util.ArrayList;
 
 public class CiudadViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    public static final String EXTRA_OBJETO_REGION =  "nacho.ciudadViewHolder";
+    public static final String EXTRA_OBJETO_CIUDAD =  "nacho.ciudadViewHolder";
     public TextView txt_rv_ciudad_id = null;
     public TextView txt_rv_ciudad_nombre = null;
     public TextView txt_rv_ciudad_descripcion = null;
@@ -32,7 +32,7 @@ public class CiudadViewHolder extends RecyclerView.ViewHolder implements View.On
         Ciudad ciudad = ciudades.get(mPosition);
         // lcAdapter.notifyDataSetChanged();
         Intent intent = new Intent(lrAdapter.getR(), ListaCiudad.class);
-        intent.putExtra(EXTRA_OBJETO_REGION, ciudad);
+        intent.putExtra(EXTRA_OBJETO_CIUDAD, ciudad);
         lrAdapter.getR().startActivity(intent);
     }
 }
