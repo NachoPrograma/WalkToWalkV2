@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edt_login_clave" />
 
     <EditText
-        android:id="@+id/edt_login_email"
+        android:id="@+id/edt_registrar_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -57,9 +57,9 @@
         android:hint="Clave"
         android:inputType="textPersonName|textPassword"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/edt_login_email"
+        app:layout_constraintEnd_toEndOf="@+id/edt_registrar_email"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/edt_login_email"
-        app:layout_constraintTop_toBottomOf="@+id/edt_login_email" />
+        app:layout_constraintStart_toStartOf="@+id/edt_registrar_email"
+        app:layout_constraintTop_toBottomOf="@+id/edt_registrar_email" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

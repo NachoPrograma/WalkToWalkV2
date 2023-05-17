@@ -108,6 +108,4 @@ public class ListaCiudad extends AppCompatActivity {
 
         popupMenu.show();
     }
-
-
 }
