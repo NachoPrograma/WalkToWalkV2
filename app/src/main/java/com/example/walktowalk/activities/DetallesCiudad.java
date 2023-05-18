@@ -28,7 +28,6 @@ public class DetallesCiudad extends AppCompatActivity {
 
         txt_detalle_idp = findViewById(R.id.edt_detalles_nombre);
         txt_detalle_nombrep = findViewById(R.id.edt_detalles_descripcion);
-        //txt_detalle_statsp = findViewById(R.id.txt_detalles_statsp);
         Intent intent = getIntent();
         if (intent != null) {
             Ciudad p = (Ciudad) intent.getSerializableExtra(CiudadViewHolder.EXTRA_OBJETO_CIUDAD);
@@ -36,7 +35,7 @@ public class DetallesCiudad extends AppCompatActivity {
             txt_detalle_idp.setText("Ciudad: " + (p.getId()));
             txt_detalle_nombrep.setText("Nombre: " + (p.getNombre()));
             txt_detalle_ciudadp.setText("Descripción: " + (p.getDescripcion()));
-            //txt_detalle_statsp.setText("Stats: " + (p.getStats()));
+
 
         }
     }
