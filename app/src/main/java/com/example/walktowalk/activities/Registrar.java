@@ -58,7 +58,7 @@ public class Registrar extends AppCompatActivity {
 
         try {
             connection = ConfiguracionDB.conectarConBaseDeDatos();
-            String query = "INSERT INTO users ('nombre', 'email', 'contraseña') VALUES (?, ?, ?)";
+            String query = "INSERT INTO users ('nombre', 'email', 'clave') VALUES (?, ?, ?)";
             statement = connection.prepareStatement(query);
             statement.setString(1, name);
             statement.setString(2, email);

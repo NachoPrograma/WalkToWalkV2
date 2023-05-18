@@ -13,6 +13,9 @@
         android:theme="@style/Theme.WalkToWalk"
         tools:targetApi="31">
         <activity
+            android:name=".activities.Mapa"
+            android:exported="false" />
+        <activity
             android:name=".activities.DetallesItinerario"
             android:exported="false" />
         <activity

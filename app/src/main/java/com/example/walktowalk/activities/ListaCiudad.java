@@ -48,12 +48,12 @@ public class ListaCiudad extends AppCompatActivity {
         String username = getIntent().getStringExtra("username");
         txt_username.setText(username);
 
-        btn_menu.setOnClickListener(new View.OnClickListener() {
+        /*btn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPopupMenu(v);
             }
-        });
+        });*/
 
         rv_ciudad = findViewById(R.id.rv_ciudad);
         mAdapter = new ListaCiudadAdapter(this);
@@ -80,7 +80,7 @@ public class ListaCiudad extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void showPopupMenu(View view) {
+    /*public void showPopupMenu(View view) {
         PopupMenu popupMenu = new PopupMenu(this, view);
         popupMenu.inflate(R.menu);
 
@@ -107,5 +107,5 @@ public class ListaCiudad extends AppCompatActivity {
         });
 
         popupMenu.show();
-    }
+    }*/
 }
