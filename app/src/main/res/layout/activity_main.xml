@@ -9,8 +9,9 @@
     <TextView
         android:layout_width="411dp"
         android:layout_height="731dp"
+        android:background="@drawable/fondo_logo_vertical"
         android:onClick="irLogin"
-        android:text="A Login"
+        android:text="."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"

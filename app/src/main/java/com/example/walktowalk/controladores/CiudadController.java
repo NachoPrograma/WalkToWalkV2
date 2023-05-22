@@ -1,7 +1,9 @@
 package com.example.walktowalk.controladores;
 import com.example.walktowalk.clases.Ciudad;
 import com.example.walktowalk.clases.Itinerario;
+import com.example.walktowalk.clases.Mapa;
 import com.example.walktowalk.tareas.TareaBuscarItinerario;
+import com.example.walktowalk.tareas.TareaBuscarMapa;
 import com.example.walktowalk.tareas.TareaObtenerCiudad;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -55,6 +57,28 @@ public class CiudadController {
             e.printStackTrace();
         }
         return itinerario;
+    }
 
+    public static ArrayList<Mapa> obtenerMapaDeItinerario(int itinerario_elegida) {
+        ArrayList<Mapa> mapa = null;
+        FutureTask t = new FutureTask (new TareaBuscarMapa(itinerario_elegida));
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        es.submit(t);
+        try {
+            mapa= (ArrayList<Mapa>)t.get();
+            es.shutdown();
+            try {
+                if (!es.awaitTermination(2000, TimeUnit.MILLISECONDS)) {
+                    es.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                es.shutdownNow();
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return mapa;
     }
 }
