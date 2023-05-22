@@ -3,6 +3,7 @@ import android.util.Log;
 
 import com.example.walktowalk.clases.Itinerario;
 import com.example.walktowalk.clases.Ciudad;
+import com.example.walktowalk.clases.Mapa;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -193,4 +194,42 @@ public class CiudadDB {
             return itinerarios;
         }
     }
+
+    public static ArrayList<Mapa> obtenerPorItinerario(int itinerario) {
+        Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
+        if(conexion == null)
+        {
+            Log.i("conexion","no va");
+            return null;
+        }
+        ArrayList<Mapa> mapas = new ArrayList<Mapa>();
+        try {
+            String ordenSQL = "SELECT * FROM mapa WHERE idItinerario like ? ORDER BY idmapa";
+
+            PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
+            sentencia.setInt(1, itinerario);
+
+            ResultSet resultado = sentencia.executeQuery();
+            while(resultado.next())
+            {
+                int id = resultado.getInt("idmapa");
+                String localizacion = resultado.getString("nombre");
+                int x = resultado.getInt("plazas");
+                int y = resultado.getInt("itinerario_iditinerario");
+                int id_itinerario = resultado.getInt("itinerario_iditinerario");
+                Mapa elMapa = new Mapa(id, localizacion, x, y, id_itinerario);
+                mapas.add(elMapa);
+            }
+            resultado.close();
+            sentencia.close();
+            conexion.close();
+            return mapas;
+        } catch (SQLException e) {
+            Log.i("sql", "error sql");
+            return mapas;
+        }
+    }
+
+
+
 }

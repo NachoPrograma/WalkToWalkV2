@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo_1"
     tools:context=".activities.Registrar">
 
     <TextView
@@ -20,7 +21,7 @@
         android:id="@+id/edt_login_nombre"
         android:layout_width="310dp"
         android:layout_height="70dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Nombre"
         android:inputType="text"
@@ -33,7 +34,7 @@
         android:id="@+id/edt_registrar_password"
         android:layout_width="310dp"
         android:layout_height="70dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPassword"
@@ -46,7 +47,7 @@
         android:id="@+id/edt_registrar_email"
         android:layout_width="310dp"
         android:layout_height="70dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
@@ -57,12 +58,13 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="246dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="44dp"
-        android:text="Registrar"
+        android:layout_width="162dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="76dp"
         android:onClick="onRegisterClick"
+        android:text="Registrar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.064"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
@@ -70,7 +72,7 @@
         android:id="@+id/checkBox"
         android:layout_width="309dp"
         android:layout_height="50dp"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
         android:text="Acepta las terminos y politicas"
         app:layout_constraintStart_toStartOf="parent"
