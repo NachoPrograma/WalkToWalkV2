@@ -52,13 +52,13 @@
         android:id="@+id/edt_login_clave"
         android:layout_width="379dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Clave"
         android:inputType="textPersonName|textPassword"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/edt_registrar_email"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/edt_registrar_email"
         app:layout_constraintTop_toBottomOf="@+id/edt_registrar_email" />
 
