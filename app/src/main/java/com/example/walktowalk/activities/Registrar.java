@@ -58,11 +58,11 @@ public class Registrar extends AppCompatActivity {
 
         try {
             connection = ConfiguracionDB.conectarConBaseDeDatos();
-            String query = "INSERT INTO users ('nombre', 'email', 'clave') VALUES (?, ?, ?)";
+            String query = "INSERT INTO users ('email', 'clave', 'nombre') VALUES (?, ?, ?)";
             statement = connection.prepareStatement(query);
-            statement.setString(1, name);
-            statement.setString(2, email);
-            statement.setString(3, password);
+            statement.setString(1, email);
+            statement.setString(2, password);
+            statement.setString(3, name);
             int rowsInserted = statement.executeUpdate();
 
             return rowsInserted > 0;
