@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class ConfiguracionDB {
     public static final String HOSTDB = "10.0.2.2";
-    public static final String NOMBREDB = "WalkToWalk";
+    public static final String NOMBREDB = "walktowalk";
     public static final String USUARIODB = "root";
     public static final String CLAVEDB = "1234";
     private static final String OPCIONESHORA = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
