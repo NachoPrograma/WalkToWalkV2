@@ -11,16 +11,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.media.MediaPlayer;
 import com.example.walktowalk.R;
 import com.example.walktowalk.clases.Mapa;
 import com.example.walktowalk.utilidades.MapaUtils;
@@ -43,6 +46,10 @@ import com.google.android.libraries.places.api.model.PlaceLikelihood;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -88,6 +95,10 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
     private List[] likelyPlaceAttributions;
     private LatLng[] likelyPlaceLatLngs;
 
+    private MediaPlayer mediaPlayer;
+    private ImageButton playButton;
+    private boolean isPlaying = false;
+
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean permissionDenied = false;
@@ -104,7 +115,19 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
-        // habilito places para crear las rutas
+        playButton = findViewById(R.id.playButton);
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPlaying) {
+                    pauseAudio();
+                } else {
+                    playAudio();
+                }
+            }
+        });
+        /* habilito places para crear las rutas
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(),getString(R.string.my_app_key));
             placesClient = Places.createClient(this);
@@ -114,6 +137,8 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
         sitiosMapa.add(s2);
         localizaciondefecto = s2;
         defaultLocation = new LatLng(s2.getLatitud(), s2.getLongitud());
+
+         */
     }
 
     @Override
@@ -483,6 +508,59 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
             Log.e("Exception: %s", e.getMessage());
         }
     }
-    // [END maps_current_place_update_location_ui]
+
+    private void playAudio() {
+        // Obtener el archivo de audio desde la base de datos MySQL
+        byte[] audioData = obtenerAudioDesdeMySQL();
+
+        // Guardar el archivo de audio localmente
+        File audioFile = guardarAudioLocalmente(audioData);
+
+        if (audioFile != null) {
+            mediaPlayer = MediaPlayer.create(this, Uri.fromFile(audioFile));
+            mediaPlayer.start();
+            isPlaying = true;
+            playButton.setImageResource(R.drawable.boton_pause);
+        }
+    }
+
+    private void pauseAudio() {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+            isPlaying = false;
+            playButton.setImageResource(R.drawable.boton_play);
+        }
+    }
+
+    private byte[] obtenerAudioDesdeMySQL() {
+        // Aquí deberás implementar la lógica para obtener los datos del archivo de audio desde MySQL
+        // Esto implica establecer una conexión con la base de datos, ejecutar una consulta y recuperar el BLOB del archivo de audio
+        // Devuelve los datos del archivo de audio en forma de byte[]
+        return new byte[0];
+    }
+
+    private File guardarAudioLocalmente(byte[] audioData) {
+        File audioFile = null;
+        FileOutputStream outputStream = null;
+
+        try {
+            audioFile = File.createTempFile("temp_audio", ".mp3", getCacheDir());
+            outputStream = new FileOutputStream(audioFile);
+            outputStream.write(audioData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return audioFile;
+        // [END maps_current_place_update_location_ui]
 //--------------------------------------------------------------------------------------------------------
+
+    }
 }
