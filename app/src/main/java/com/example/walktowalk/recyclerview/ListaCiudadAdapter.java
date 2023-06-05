@@ -61,9 +61,9 @@ public class ListaCiudadAdapter extends RecyclerView.Adapter<CiudadViewHolder>{
     public void onBindViewHolder(@NonNull CiudadViewHolder holder, int position) {
         if(listaCiudad!=null) {
             Ciudad ciudad_actual = listaCiudad.get(position);
-            holder.txt_rv_ciudad_id.setText("Id: " + ciudad_actual.getId());
+           // holder.txt_rv_ciudad_id.setText("Id: " + ciudad_actual.getId());
             holder.txt_rv_ciudad_nombre.setText(("Nombre: " + ciudad_actual.getNombre()));
-            holder.txt_rv_ciudad_descripcion.setText("Descripcion: " + ciudad_actual.getDescripcion());
+
 
         }
     }

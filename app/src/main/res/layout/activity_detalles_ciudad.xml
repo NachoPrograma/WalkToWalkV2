@@ -39,7 +39,7 @@
         android:layout_width="234dp"
         android:layout_height="67dp"
         android:layout_marginBottom="48dp"
-        android:onClick="detalles_editar_ciudad"
+        android:onClick="ListaItinerarios"
         android:text="Ver Itinerarios"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

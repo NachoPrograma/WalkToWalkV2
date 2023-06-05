@@ -30,14 +30,15 @@ public class ListaCiudad extends AppCompatActivity {
     private List<Ciudad> ciudad;
     private TextView txt_username;
     private ImageButton btn_menu;
-    private String ciudad_elegida;
-    public static final String EXTRA_REGION_ELEGIDA_A_BASEDEDATOS = "es.nacho.ciudad.mainToBasedeDatos";
+    public String ciudad_elegida;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_ciudad);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -74,11 +75,7 @@ public class ListaCiudad extends AppCompatActivity {
         Toast.makeText(this,texto, Toast.LENGTH_SHORT).show();
     }
 
-    public void BaseDeDatos(View view) {
-        Intent intent = new Intent(this, ListaCiudad.class);
-        intent.putExtra(EXTRA_REGION_ELEGIDA_A_BASEDEDATOS, ciudad_elegida);
-        startActivity(intent);
-    }
+
 
     /*public void showPopupMenu(View view) {
         PopupMenu popupMenu = new PopupMenu(this, view);

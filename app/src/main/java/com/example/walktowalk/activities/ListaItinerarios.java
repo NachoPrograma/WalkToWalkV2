@@ -21,7 +21,7 @@ import java.util.List;
 public class ListaItinerarios extends AppCompatActivity {
 
     private RecyclerView rv_itinerario;
-    public static final String EXTRA_REGION = "es.nacho.ciudad.base_de_datosToNuevoPoke";
+    public static final String EXTRA_REGION = "es.nacho.ciudad.ListaItinerarios";
     private ListaItinerarioAdapter mAdapter;
     private List<Itinerario> itinerario;
     private String ciudad_elegida;
@@ -35,6 +35,9 @@ public class ListaItinerarios extends AppCompatActivity {
         if(intent != null){
             Ciudad ciudad=(Ciudad) intent.getSerializableExtra(CiudadViewHolder.EXTRA_OBJETO_CIUDAD);
             ciudad_elegida= ciudad.getNombre();
+            if(ciudad_elegida==null){
+                ciudad_elegida="a";
+            }
             setContentView(R.layout.activity_lista_itinerarios);
             rv_itinerario = findViewById(R.id.rv_itinerario);
             mAdapter = new ListaItinerarioAdapter(this);
@@ -54,14 +57,7 @@ public class ListaItinerarios extends AppCompatActivity {
         Toast.makeText(this,texto, Toast.LENGTH_SHORT).show();
     }
 
-    public void actualizar(View view) {
-        ArrayList<Itinerario> itinerario= CiudadController.obtenerItinerarioDeCiudad(ciudad_elegida);
-        if(itinerario != null) {
-            mAdapter.setListaItinerario(itinerario);
-        }
-        rv_itinerario.setAdapter(mAdapter);
-        rv_itinerario.setLayoutManager(new LinearLayoutManager(this));
-    }
+
 
 
 }

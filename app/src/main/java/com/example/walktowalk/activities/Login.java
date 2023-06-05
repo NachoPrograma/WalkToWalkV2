@@ -39,6 +39,8 @@ public class Login extends AppCompatActivity {
             ResultSet resultSet = statement.executeQuery();
             return resultSet.next(); // Si hay un resultado, las credenciales son válidas
         } catch (SQLException e) {
+            Toast.makeText(this,"No va", Toast.LENGTH_SHORT).show();
+
             e.printStackTrace();
             return false;
         }

@@ -16,13 +16,17 @@ public class ItinerarioViewHolder extends RecyclerView.ViewHolder implements Vie
     public static final String EXTRA_OBJETO_ITINERARIO =  "nacho.itinerarioViewHolder";
     public TextView txt_rv_itinerario_id = null;
     public TextView txt_rv_itinerario_nombre = null;
+    public TextView txt_rv_itinerario_descripcion = null;
     public TextView txt_rv_itinerario_plazas = null;
+    public TextView txt_rv_itinerario_id_ciudad = null;
     ListaItinerarioAdapter lpAdapter;
 
     public ItinerarioViewHolder(@NonNull View itemView, ListaItinerarioAdapter lpAdapter) {
         super(itemView);
         txt_rv_itinerario_id = (TextView)  itemView.findViewById(R.id.txt_rv_itinerario_id);
         txt_rv_itinerario_nombre = (TextView)  itemView.findViewById(R.id.txt_rv_itinerario_nombre);
+        txt_rv_itinerario_descripcion = (TextView)  itemView.findViewById(R.id.txt_rv_itinerario_descripcion);
+        txt_rv_itinerario_id_ciudad = (TextView)  itemView.findViewById(R.id.txt_rv_itinerarios_id_ciudad);
         txt_rv_itinerario_plazas = (TextView)  itemView.findViewById(R.id.txt_rv_plazas);
         this.lpAdapter = lpAdapter;
         itemView.setOnClickListener(this);

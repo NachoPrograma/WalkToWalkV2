@@ -127,18 +127,21 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
                 }
             }
         });
-        /* habilito places para crear las rutas
+        //habilito places para crear las rutas
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(),getString(R.string.my_app_key));
             placesClient = Places.createClient(this);
         }
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        /*
         sitiosMapa.add(s1);
         sitiosMapa.add(s2);
         localizaciondefecto = s2;
         defaultLocation = new LatLng(s2.getLatitud(), s2.getLongitud());
 
          */
+
+
     }
 
     @Override

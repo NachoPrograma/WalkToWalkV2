@@ -60,7 +60,7 @@ public class CiudadDB {
             while(resultado.next())
             {
                 int id = resultado.getInt("idciudad");
-                String nombre = resultado.getString("nombre_ciudad");
+                String nombre = resultado.getString("nombre");
                 String descripcion = resultado.getString("descripcion");
                 Ciudad laCiudad = new Ciudad(id, nombre, descripcion);
                 ciudades.add(laCiudad);

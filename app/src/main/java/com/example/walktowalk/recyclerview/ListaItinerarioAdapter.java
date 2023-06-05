@@ -56,6 +56,8 @@ public class ListaItinerarioAdapter extends RecyclerView.Adapter<ItinerarioViewH
             Itinerario itinerario_actual = listaItinerario.get(position);
             holder.txt_rv_itinerario_id.setText("Itinerario: " + itinerario_actual.getId());
             holder.txt_rv_itinerario_nombre.setText(("Nombre: " + itinerario_actual.getNombre()));
+            holder.txt_rv_itinerario_descripcion.setText(("Descripcion: " + itinerario_actual.getDescripcion()));
+            holder.txt_rv_itinerario_plazas.setText(String.valueOf("Id_Ciudad: " + itinerario_actual.getIdciudad()));
             holder.txt_rv_itinerario_plazas.setText(String.valueOf("Plazas: " + itinerario_actual.getPlazas()));
         }
     }
