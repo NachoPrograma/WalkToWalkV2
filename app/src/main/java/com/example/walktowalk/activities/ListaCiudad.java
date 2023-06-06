@@ -31,6 +31,7 @@ public class ListaCiudad extends AppCompatActivity {
     private TextView txt_username;
     private ImageButton btn_menu;
     public String ciudad_elegida;
+    public static final String EXTRA_REGION_ELEGIDA_A_BASEDEDATOS = "es.nacho.ciudad.mainToBasedeDatos";
 
 
 
@@ -73,6 +74,12 @@ public class ListaCiudad extends AppCompatActivity {
 
     private void mostrarToast(String texto) {
         Toast.makeText(this,texto, Toast.LENGTH_SHORT).show();
+    }
+
+    public void BaseDeDatos(View view) {
+        Intent intent = new Intent(this, ListaItinerarios.class);
+        intent.putExtra(EXTRA_REGION_ELEGIDA_A_BASEDEDATOS, ciudad_elegida);
+        startActivity(intent);
     }
 
 

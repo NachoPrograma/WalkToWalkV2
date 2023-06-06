@@ -105,6 +105,7 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
     private GoogleMap mMap;
     ArrayList<Mapa> sitiosMapa;
     Mapa localizaciondefecto;
+    private String itinerario_elegido;
 
     //--------------------------------------------------------------------------------------------------------------------------------------
     @Override
@@ -295,7 +296,7 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
                 finish();
                 return true;
             case R.id.ir_mapa1_home:
-                Intent intent1 = new Intent(this,MainActivity.class);
+                Intent intent1 = new Intent(this, Login.class);
                 startActivity(intent1);
                 return true;
             default:

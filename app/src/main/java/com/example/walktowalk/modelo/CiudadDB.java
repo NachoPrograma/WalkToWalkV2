@@ -214,8 +214,8 @@ public class CiudadDB {
             {
                 int id = resultado.getInt("idmapa");
                 String localizacion = resultado.getString("nombre");
-                int x = resultado.getInt("plazas");
-                int y = resultado.getInt("itinerario_iditinerario");
+                int x = resultado.getInt("longitud");
+                int y = resultado.getInt("latitud");
                 int id_itinerario = resultado.getInt("itinerario_iditinerario");
                 Mapa elMapa = new Mapa(id, localizacion, x, y, id_itinerario);
                 mapas.add(elMapa);

@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.walktowalk.R;
-import com.example.walktowalk.activities.DetallesItinerario;
+import com.example.walktowalk.activities.Mapas;
 import com.example.walktowalk.clases.Itinerario;
 
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class ItinerarioViewHolder extends RecyclerView.ViewHolder implements Vie
         int mPosition = getAdapterPosition();
         ArrayList<Itinerario> itinerarios = this.lpAdapter.getListaItinerario();
         Itinerario itinerario = itinerarios.get(mPosition);
-        Intent intent = new Intent(lpAdapter.getP(), DetallesItinerario.class);
+        Intent intent = new Intent(lpAdapter.getP(), Mapas.class);
         intent.putExtra(EXTRA_OBJETO_ITINERARIO, itinerario);
         lpAdapter.getP().startActivity(intent);
     }

@@ -25,6 +25,8 @@ public class ListaItinerarios extends AppCompatActivity {
     private ListaItinerarioAdapter mAdapter;
     private List<Itinerario> itinerario;
     private String ciudad_elegida;
+    private String itinerario_elegido;
+    public static final String EXTRA_ITINERARIO_ELEGIDA_A_BASEDEDATOS = "es.nacho.region.mainToBasedeDatos";
 
 
     @Override
@@ -50,13 +52,19 @@ public class ListaItinerarios extends AppCompatActivity {
             rv_itinerario.setAdapter(mAdapter);
             rv_itinerario.setLayoutManager(new LinearLayoutManager(this));
 
+            itinerario_elegido=String.valueOf(itinerario);
+
 
         }
     }
     private void mostrarToast(String texto) {
         Toast.makeText(this,texto, Toast.LENGTH_SHORT).show();
     }
-
+    public void BaseDeDatos(View view) {
+        Intent intent = new Intent(this, Mapas.class);
+        intent.putExtra(EXTRA_ITINERARIO_ELEGIDA_A_BASEDEDATOS, itinerario_elegido);
+        startActivity(intent);
+    }
 
 
 
