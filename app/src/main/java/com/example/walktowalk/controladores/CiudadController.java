@@ -36,7 +36,7 @@ public class CiudadController {
         return ciudad;
     }
 
-    public static ArrayList<Itinerario> obtenerItinerarioDeCiudad(String ciudad_elegida) {
+    public static ArrayList<Itinerario> obtenerItinerarioDeCiudad(int ciudad_elegida) {
         ArrayList<Itinerario> itinerario = null;
         FutureTask t = new FutureTask (new TareaBuscarItinerario(ciudad_elegida));
         ExecutorService es = Executors.newSingleThreadExecutor();

@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 public class TareaBuscarItinerario implements Callable<ArrayList<Itinerario>> {
-    String ciudad=null;
-    public TareaBuscarItinerario(String ciudad_elegida) {
+    int ciudad= 0;
+    public TareaBuscarItinerario(int ciudad_elegida) {
         ciudad=ciudad_elegida;
     }
     @Override

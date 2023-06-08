@@ -1,6 +1,7 @@
 package com.example.walktowalk.recyclerview;
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ public class ItinerarioViewHolder extends RecyclerView.ViewHolder implements Vie
     public TextView txt_rv_itinerario_descripcion = null;
     public TextView txt_rv_itinerario_plazas = null;
     public TextView txt_rv_itinerario_id_ciudad = null;
+    public ImageView img_itinerario = null;
     ListaItinerarioAdapter lpAdapter;
 
     public ItinerarioViewHolder(@NonNull View itemView, ListaItinerarioAdapter lpAdapter) {
@@ -28,6 +30,7 @@ public class ItinerarioViewHolder extends RecyclerView.ViewHolder implements Vie
         txt_rv_itinerario_descripcion = (TextView)  itemView.findViewById(R.id.txt_rv_itinerario_descripcion);
         txt_rv_itinerario_id_ciudad = (TextView)  itemView.findViewById(R.id.txt_rv_itinerarios_id_ciudad);
         txt_rv_itinerario_plazas = (TextView)  itemView.findViewById(R.id.txt_rv_plazas);
+        img_itinerario = (ImageView)  itemView.findViewById(R.id.img_item_ciudad);
         this.lpAdapter = lpAdapter;
         itemView.setOnClickListener(this);
     }

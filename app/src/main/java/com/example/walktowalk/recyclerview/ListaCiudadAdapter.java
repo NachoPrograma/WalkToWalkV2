@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.walktowalk.R;
 import com.example.walktowalk.clases.Ciudad;
+import com.example.walktowalk.clases.Fotos;
 
 import java.util.ArrayList;
 
@@ -18,14 +19,17 @@ public class ListaCiudadAdapter extends RecyclerView.Adapter<CiudadViewHolder>{
     private Context r;
     private ArrayList<Ciudad> listaCiudad;
     private LayoutInflater mInflater;
+    ArrayList<Fotos> listaFotosCiudades;
 
     public void setR(Context r) {
         this.r = r;
         this.listaCiudad = new ArrayList<Ciudad>();
+
     }
-    public ListaCiudadAdapter(Context r, ArrayList<Ciudad> listaCiudad) {
+    public ListaCiudadAdapter(Context r, ArrayList<Ciudad> listaCiudad, ArrayList<Fotos> fotosCiudades) {
         this.r = r;
         this.listaCiudad = listaCiudad;
+        this.listaFotosCiudades = fotosCiudades;
         mInflater = LayoutInflater.from(r);
     }
 
@@ -34,7 +38,9 @@ public class ListaCiudadAdapter extends RecyclerView.Adapter<CiudadViewHolder>{
     }
 
 
-
+    public ArrayList<Fotos> getListaFotosCiudades() {
+        return listaFotosCiudades;
+    }
     public ArrayList<Ciudad> getListaCiudad() {
         return listaCiudad;
     }
@@ -63,7 +69,17 @@ public class ListaCiudadAdapter extends RecyclerView.Adapter<CiudadViewHolder>{
             Ciudad ciudad_actual = listaCiudad.get(position);
             holder.txt_rv_ciudad_id.setText("Id: " + ciudad_actual.getId());
             holder.txt_rv_ciudad_nombre.setText(("Nombre: " + ciudad_actual.getNombre()));
-
+            if(this.listaFotosCiudades != null)
+            {
+                for(Fotos fc: this.listaFotosCiudades)
+                {
+                    if(fc.getIdciudad()==ciudad_actual.getId())
+                    {
+                        holder.img_ciudad.setImageBitmap(fc.getFoto());
+                        break;
+                    }
+                }
+            }
 
         }
     }

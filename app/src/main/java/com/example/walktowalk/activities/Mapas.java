@@ -25,7 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.media.MediaPlayer;
 import com.example.walktowalk.R;
+import com.example.walktowalk.clases.Ciudad;
+import com.example.walktowalk.clases.Itinerario;
 import com.example.walktowalk.clases.Mapa;
+import com.example.walktowalk.controladores.CiudadController;
+import com.example.walktowalk.recyclerview.CiudadViewHolder;
+import com.example.walktowalk.recyclerview.ItinerarioViewHolder;
 import com.example.walktowalk.utilidades.MapaUtils;
 import com.example.walktowalk.utilidades.PermissionUtils;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -60,7 +65,8 @@ import java.util.List;
 public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
         OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        GoogleMap.OnMarkerClickListener{
 
     private static final String TAG = Mapas.class.getSimpleName();
     private CameraPosition cameraPosition;
@@ -105,19 +111,25 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
     private GoogleMap mMap;
     ArrayList<Mapa> sitiosMapa;
     Mapa localizaciondefecto;
-    private String itinerario_elegido;
+    private int itinerario_elegido;
 
     //--------------------------------------------------------------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mapas);
-        if (savedInstanceState != null) {
-            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+        Intent intent = getIntent();
+        if(intent != null) {
+            Itinerario itinerario = (Itinerario) intent.getSerializableExtra(ItinerarioViewHolder.EXTRA_OBJETO_ITINERARIO);
+            itinerario_elegido = itinerario.getId();
+            setContentView(R.layout.activity_mapas);
+            ArrayList<Mapa> sitiosMapa = CiudadController.obtenerMapaDeItinerario(itinerario_elegido);
+            if (savedInstanceState != null) {
+                lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+                cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+            }
         }
-        playButton = findViewById(R.id.playButton);
 
+        playButton = findViewById(R.id.playButton);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,15 +146,24 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
             placesClient = Places.createClient(this);
         }
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        /*
-        sitiosMapa.add(s1);
-        sitiosMapa.add(s2);
-        localizaciondefecto = s2;
-        defaultLocation = new LatLng(s2.getLatitud(), s2.getLongitud());
 
-         */
+    }
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        String audioFileName = (String) marker.getTag();
 
+        if (audioFileName != null) {
+            // Obtener el identificador del recurso correspondiente al nombre del archivo de audio
+            int audioResourceId = getResources().getIdentifier(audioFileName, "raw", getPackageName());
 
+            if (audioResourceId != 0) {
+                // Reproducir el archivo de audio correspondiente
+                MediaPlayer mediaPlayer = MediaPlayer.create(this, audioResourceId);
+                mediaPlayer.start();
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -169,7 +190,7 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
         MapaUtils.addMarkes(mMap,sitiosMapa);
 
         //zoom hasta la posicion destino
-        // LatLng lpordefecto = new LatLng(localizaciondefecto.getLatitud(), localizaciondefecto.getLongitud());
+        LatLng lpordefecto = new LatLng(localizaciondefecto.getX(), localizaciondefecto.getY());
         // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom( lpordefecto, DEFAULT_ZOOM));
         //-----------------------------------------------------------------------------------------
         this.mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
