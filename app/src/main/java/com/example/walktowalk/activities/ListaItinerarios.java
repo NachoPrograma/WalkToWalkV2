@@ -34,7 +34,6 @@ public class ListaItinerarios extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         if(intent != null){
@@ -49,13 +48,9 @@ public class ListaItinerarios extends AppCompatActivity {
                 mAdapter.setListaItinerario(itinerario);
             }
             //------------------------------------------------------------
-
             rv_itinerario.setAdapter(mAdapter);
             rv_itinerario.setLayoutManager(new LinearLayoutManager(this));
-
             itinerario_elegido=String.valueOf(itinerario);
-
-
         }
     }
     private void mostrarToast(String texto) {

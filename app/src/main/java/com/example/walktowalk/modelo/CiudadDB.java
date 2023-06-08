@@ -1,6 +1,7 @@
 package com.example.walktowalk.modelo;
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.walktowalk.clases.Itinerario;
 import com.example.walktowalk.clases.Ciudad;
@@ -74,6 +75,48 @@ public class CiudadDB {
             Log.i("sql", "error sql");
             return null;
         }
+    }
+    public static boolean validarCredenciales(String email, String clave) {
+        try {
+            Connection connection = ConfiguracionDB.conectarConBaseDeDatos();
+            String query = "SELECT * FROM usuarios WHERE email = ? AND clave = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            statement.setString(2, clave);
+            ResultSet resultSet = statement.executeQuery();
+            return resultSet.next(); // Si hay un resultado, las credenciales son válidas
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public static String getUsername(String email, String clave) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = ConfiguracionDB.conectarConBaseDeDatos();
+            String query = "SELECT nombre FROM usuarios WHERE email = ? AND clave = ?";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+            statement.setString(2, clave);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString("nombre");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     public static ArrayList<Ciudad> obtenerCiudad() {

@@ -31,36 +31,20 @@ public class ListaCiudad extends AppCompatActivity {
     private ImageButton btn_menu;
     public String ciudad_elegida;
     public static final String EXTRA_REGION_ELEGIDA_A_BASEDEDATOS = "es.nacho.ciudad.mainToBasedeDatos";
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_ciudad);
-
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         txt_username = findViewById(R.id.txt_username);
         btn_menu = findViewById(R.id.btn_menu);
-
         String username = getIntent().getStringExtra("username");
         txt_username.setText(username);
-
-        /*btn_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupMenu(v);
-            }
-        });*/
-
         rv_ciudad = findViewById(R.id.rv_ciudad);
         mAdapter = new ListaCiudadAdapter(this);
         ArrayList<Ciudad> ciudad = CiudadController.obtenerCiudad();
         fotosCiudades = FotoCiudadController.obtenerFotosCiudades();
-
         if(ciudad != null) {
             mAdapter.setListaCiudad(ciudad);
         }
@@ -69,47 +53,13 @@ public class ListaCiudad extends AppCompatActivity {
         rv_ciudad.setLayoutManager(new LinearLayoutManager(this));
         //------------------------------------------------------------
         ciudad_elegida=String.valueOf(ciudad);
-
     }
-
     private void mostrarToast(String texto) {
         Toast.makeText(this,texto, Toast.LENGTH_SHORT).show();
     }
-
     public void BaseDeDatos(View view) {
         Intent intent = new Intent(this, ListaItinerarios.class);
         intent.putExtra(EXTRA_REGION_ELEGIDA_A_BASEDEDATOS, ciudad_elegida);
         startActivity(intent);
     }
-
-
-
-    /*public void showPopupMenu(View view) {
-        PopupMenu popupMenu = new PopupMenu(this, view);
-        popupMenu.inflate(R.menu);
-
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_option1:
-                        // Acción para la opción 1
-                        Toast.makeText(ListaCiudad.this, "Opción 1 seleccionada", Toast.LENGTH_SHORT).show();
-                        return true;
-                    case R.id.menu_option2:
-                        // Acción para la opción 2
-                        Toast.makeText(ListaCiudad.this, "Opción 2 seleccionada", Toast.LENGTH_SHORT).show();
-                        return true;
-                    case R.id.menu_option3:
-                        // Acción para la opción 3
-                        Toast.makeText(ListaCiudad.this, "Opción 3 seleccionada", Toast.LENGTH_SHORT).show();
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
-
-        popupMenu.show();
-    }*/
 }

@@ -17,16 +17,13 @@ public class Registrar extends AppCompatActivity {
     private EditText edtName;
     private EditText edtEmail;
     private EditText edtPassword;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
-
         edtName = findViewById(R.id.edt_login_nombre);
         edtEmail = findViewById(R.id.edt_registrar_email);
         edtPassword = findViewById(R.id.edt_registrar_password);
-
     }
     public void onRegisterClick(View view) {
         String usuario = edtName.getText().toString().trim();

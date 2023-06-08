@@ -60,59 +60,46 @@ import java.util.Arrays;
 import java.util.List;
 // ayuda desde la web
 // https://github.com/googlemaps/android-samples/tree/0ec4153b3766bc2fcecb0e2b638971544325aa87/tutorials/java/CurrentPlaceDetailsOnMap
-
-
 public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
         OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback,
         GoogleMap.OnMarkerClickListener{
-
     private static final String TAG = Mapas.class.getSimpleName();
     private CameraPosition cameraPosition;
-
     // The entry point to the Places API.
     private PlacesClient placesClient;
-
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient fusedLocationProviderClient;
-
     // A default location (Sydney, Australia) and default zoom to use when location permission is
     // not granted.
     private LatLng defaultLocation = null;
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private boolean locationPermissionGranted;
-
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private Location lastKnownLocation;
-
     // Keys for storing activity state.
     // [START maps_current_place_state_keys]
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
     // [END maps_current_place_state_keys]
-
     // Used for selecting the current place.
     private static final int M_MAX_ENTRIES = 5;
     private String[] likelyPlaceNames;
     private String[] likelyPlaceAddresses;
     private List[] likelyPlaceAttributions;
     private LatLng[] likelyPlaceLatLngs;
-
     private MediaPlayer mediaPlayer;
     private ImageButton playButton;
     private boolean isPlaying = false;
-
-
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean permissionDenied = false;
     private GoogleMap mMap;
     ArrayList<Mapa> sitiosMapa;
     Mapa localizaciondefecto;
     private int itinerario_elegido;
-
     //--------------------------------------------------------------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +115,6 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
                 cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
             }
         }
-
         playButton = findViewById(R.id.playButton);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +132,6 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
             placesClient = Places.createClient(this);
         }
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
     }
     @Override
     public boolean onMarkerClick(Marker marker) {
@@ -162,10 +147,8 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
                 mediaPlayer.start();
             }
         }
-
         return false;
     }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         if (mMap != null) {
@@ -178,17 +161,13 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
     // METODOS PARA LOS MAPAS
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-
         mMap = googleMap;
-
         //pongo mi localizacion actual en el mapa (punto azul)
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
-
         // añadimos los lugares al mapa (puntos rojos)
         MapaUtils.addMarkes(mMap,sitiosMapa);
-
         //zoom hasta la posicion destino
         LatLng lpordefecto = new LatLng(localizaciondefecto.getX(), localizaciondefecto.getY());
         // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom( lpordefecto, DEFAULT_ZOOM));
@@ -205,29 +184,23 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
 
                 TextView snippet = infoWindow.findViewById(R.id.snippet);
                 snippet.setText(marker.getSnippet());
-
                 return infoWindow;
             }
-
             @Override
             // Return null here, so that getInfoContents() is called next.
             public View getInfoWindow(Marker arg0) {
                 return null;
             }
         });
-
         // [END map_current_place_set_info_window_adapter]
         // Prompt the user for permission.
         getLocationPermission();
         // [END_EXCLUDE]
-
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI();
-
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
     }
-
     // METODOS PARA HABILITAR LA LOCALIZACION
     /**
      * Enables the My Location layer if the fine location permission has been granted.
@@ -244,7 +217,6 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
         }
     }
-
     @Override
     public boolean onMyLocationButtonClick() {
         Toast.makeText(this, "el botón de localización ha sido pulsado ", Toast.LENGTH_SHORT).show();
@@ -252,20 +224,17 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
         // (the camera animates to the user's current position).
         return false;
     }
-
     @Override
     public void onMyLocationClick(@NonNull Location location) {
         // al darle a mi ubicación actual (punto azul) se ejecuta este código
         // Toast.makeText(this, "Mi localización actual es:\n" + location, Toast.LENGTH_LONG).show();
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
             return;
         }
-
         if (PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
             // Enable the my location layer if the permission has been granted.
             enableMyLocation();
@@ -276,7 +245,6 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
         }
         updateLocationUI();
     }
-
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
@@ -286,7 +254,6 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
             permissionDenied = false;
         }
     }
-
     /**
      * Displays a dialog with error message explaining that the location permission is missing.
      */
@@ -294,12 +261,10 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
-
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
     }
-
     // METODOS DEL MENU
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -307,8 +272,6 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
         inflater.inflate(R.menu.mapa1_menu, menu);
         return true;
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -324,7 +287,6 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
                 return super.onOptionsItemSelected(item);
         }
     }
-
 //--------------------------------------------------------------------------------------------------------
     // METODOS PARA REALIZAR LAS RUTAS
     /**
@@ -365,7 +327,6 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
         }
     }
     // [END maps_current_place_get_device_location]
-
     /**
      * Prompts the user for permission to use the device location.
      */
@@ -387,11 +348,9 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
         }
     }
     // [END maps_current_place_location_permission]
-
     /**
      * Handles the result of the request for location permissions.
      */
-
     /**
      * Prompts the user to select the current place from a list of likely places, and shows the
      * current place on the map - provided the user has granted location permission.
@@ -405,11 +364,9 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
             // Use fields to define the data types to return.
             List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS,
                     Place.Field.LAT_LNG);
-
             // Use the builder to create a FindCurrentPlaceRequest.
             FindCurrentPlaceRequest request =
                     FindCurrentPlaceRequest.newInstance(placeFields);
-
             // Get the likely places - that is, the businesses and other points of interest that
             // are the best match for the device's current location.
             @SuppressWarnings("MissingPermission") final
@@ -420,7 +377,6 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
                 public void onComplete(@NonNull Task<FindCurrentPlaceResponse> task) {
                     if (task.isSuccessful() && task.getResult() != null) {
                         FindCurrentPlaceResponse likelyPlaces = task.getResult();
-
                         // Set the count, handling cases where less than 5 entries are returned.
                         int count;
                         if (likelyPlaces.getPlaceLikelihoods().size() < M_MAX_ENTRIES) {
@@ -428,13 +384,11 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
                         } else {
                             count = M_MAX_ENTRIES;
                         }
-
                         int i = 0;
                         likelyPlaceNames = new String[count];
                         likelyPlaceAddresses = new String[count];
                         likelyPlaceAttributions = new List[count];
                         likelyPlaceLatLngs = new LatLng[count];
-
                         for (PlaceLikelihood placeLikelihood : likelyPlaces.getPlaceLikelihoods()) {
                             // Build a list of likely places to show the user.
                             likelyPlaceNames[i] = placeLikelihood.getPlace().getName();
@@ -442,13 +396,11 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
                             likelyPlaceAttributions[i] = placeLikelihood.getPlace()
                                     .getAttributions();
                             likelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();
-
                             i++;
                             if (i > (count - 1)) {
                                 break;
                             }
                         }
-
                         // Show a dialog offering the user the list of likely places, and add a
                         // marker at the selected place.
                         Mapas.this.openPlacesDialog();
@@ -461,19 +413,16 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
         } else {
             // The user has not granted permission.
             Log.i(TAG, "The user did not grant location permission.");
-
             // Add a default marker, because the user hasn't selected a place.
             mMap.addMarker(new MarkerOptions()
                     .title(getString(R.string.default_info_title))
                     .position(defaultLocation)
                     .snippet(getString(R.string.default_info_snippet)));
-
             // Prompt the user for permission.
             getLocationPermission();
         }
     }
     // [END maps_current_place_show_current_place]
-
     /**
      * Displays a form allowing the user to select a place from a list of likely places.
      */
@@ -489,20 +438,17 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
                 if (likelyPlaceAttributions[which] != null) {
                     markerSnippet = markerSnippet + "\n" + likelyPlaceAttributions[which];
                 }
-
                 // Add a marker for the selected place, with an info window
                 // showing information about that place.
                 mMap.addMarker(new MarkerOptions()
                         .title(likelyPlaceNames[which])
                         .position(markerLatLng)
                         .snippet(markerSnippet));
-
                 // Position the map's camera at the location of the marker.
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng,
                         DEFAULT_ZOOM));
             }
         };
-
         // Display the dialog.
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.pick_place)
@@ -510,7 +456,6 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
                 .show();
     }
     // [END maps_current_place_open_places_dialog]
-
     /**
      * Updates the map's UI settings based on whether the user has granted location permission.
      */
@@ -533,14 +478,11 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
             Log.e("Exception: %s", e.getMessage());
         }
     }
-
     private void playAudio() {
         // Obtener el archivo de audio desde la base de datos MySQL
         byte[] audioData = obtenerAudioDesdeMySQL();
-
         // Guardar el archivo de audio localmente
         File audioFile = guardarAudioLocalmente(audioData);
-
         if (audioFile != null) {
             mediaPlayer = MediaPlayer.create(this, Uri.fromFile(audioFile));
             mediaPlayer.start();
@@ -548,7 +490,6 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
             playButton.setImageResource(R.drawable.boton_pause);
         }
     }
-
     private void pauseAudio() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.pause();
@@ -556,18 +497,15 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
             playButton.setImageResource(R.drawable.boton_play);
         }
     }
-
     private byte[] obtenerAudioDesdeMySQL() {
         // Aquí deberás implementar la lógica para obtener los datos del archivo de audio desde MySQL
         // Esto implica establecer una conexión con la base de datos, ejecutar una consulta y recuperar el BLOB del archivo de audio
         // Devuelve los datos del archivo de audio en forma de byte[]
         return new byte[0];
     }
-
     private File guardarAudioLocalmente(byte[] audioData) {
         File audioFile = null;
         FileOutputStream outputStream = null;
-
         try {
             audioFile = File.createTempFile("temp_audio", ".mp3", getCacheDir());
             outputStream = new FileOutputStream(audioFile);
@@ -586,6 +524,5 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
         return audioFile;
         // [END maps_current_place_update_location_ui]
 //--------------------------------------------------------------------------------------------------------
-
     }
 }
