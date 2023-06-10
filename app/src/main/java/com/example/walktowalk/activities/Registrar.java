@@ -52,7 +52,6 @@ public class Registrar extends AppCompatActivity {
         // Insertar el usuario en la base de datos
         Connection connection = null;
         PreparedStatement statement = null;
-
         try {
             connection = ConfiguracionDB.conectarConBaseDeDatos();
             String query = "INSERT INTO users ('email', 'clave', 'nombre') VALUES (?, ?, ?)";
@@ -61,7 +60,6 @@ public class Registrar extends AppCompatActivity {
             statement.setString(2, password);
             statement.setString(3, name);
             int rowsInserted = statement.executeUpdate();
-
             return rowsInserted > 0;
         } catch (SQLException e) {
             e.printStackTrace();

@@ -3,60 +3,58 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Itinerario implements Serializable{
-    private int id;
+    private String id;
     private String nombre;
     private String descripcion;
-    private int plazas;
-    private int idciudad;
+    private String  plazas;
+    private String idciudad;
+    private int imagenResId;
 
-    public Itinerario(int id, String nombre, String descripcion, int plazas, int idciudad) {
+    public Itinerario(String id, String nombre, String descripcion, String  plazas, String idciudad, int imagenResId) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.plazas = plazas;
         this.idciudad = idciudad;
-    }
+        this.imagenResId = imagenResId; // Inicializa la propiedad
 
-    public int getId() {
+    }
+    public String getId() {
         return id;
     }
-
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
-
     public String getNombre() {
         return nombre;
     }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
     public String getDescripcion() {
         return descripcion;
     }
-
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-
-    public int getPlazas() {
+    public String  getPlazas() {
         return plazas;
     }
-
-    public void setPlazas(int plazas) {
+    public void setPlazas(String  plazas) {
         this.plazas = plazas;
     }
-
-    public int getIdciudad() {
+    public String getIdciudad() {
         return idciudad;
     }
-
-    public void setIdciudad(int idciudad) {
+    public void setIdciudad(String idciudad) {
         this.idciudad = idciudad;
     }
-
+    public int getImagenResId() {
+        return imagenResId;
+    }
+    public void setImagenResId(int imagenResId) {
+        this.imagenResId = imagenResId;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -64,12 +62,10 @@ public class Itinerario implements Serializable{
         Itinerario pokemon = (Itinerario) o;
         return Objects.equals(id, pokemon.id);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
-
     @Override
     public String toString() {
         return  getNombre() ;

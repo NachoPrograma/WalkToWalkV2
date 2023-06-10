@@ -31,7 +31,6 @@ public class Login extends AppCompatActivity {
         Intent intent = new Intent(this, Registrar.class);
         startActivity(intent);
     }
-
     public void onClickLogin(View view) {
         String email = edt_login_email.getText().toString();
         String clave = edt_login_clave.getText().toString();

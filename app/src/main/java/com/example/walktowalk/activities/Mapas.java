@@ -25,11 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.media.MediaPlayer;
 import com.example.walktowalk.R;
-import com.example.walktowalk.clases.Ciudad;
 import com.example.walktowalk.clases.Itinerario;
 import com.example.walktowalk.clases.Mapa;
-import com.example.walktowalk.controladores.CiudadController;
-import com.example.walktowalk.recyclerview.CiudadViewHolder;
 import com.example.walktowalk.recyclerview.ItinerarioViewHolder;
 import com.example.walktowalk.utilidades.MapaUtils;
 import com.example.walktowalk.utilidades.PermissionUtils;
@@ -52,9 +49,11 @@ import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -93,59 +92,114 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
     private LatLng[] likelyPlaceLatLngs;
     private MediaPlayer mediaPlayer;
     private ImageButton playButton;
+    private ImageButton botonDerecha;
+    private ImageButton botonIzquierda;
     private boolean isPlaying = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean permissionDenied = false;
     private GoogleMap mMap;
     ArrayList<Mapa> sitiosMapa;
     Mapa localizaciondefecto;
-    private int itinerario_elegido;
+    private int ubicacionActual = 0; // Ubicación actual seleccionada
+    private String itinerario_elegido;
     //--------------------------------------------------------------------------------------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sitiosMapa = MapasDesdeCSV();
         Intent intent = getIntent();
         if(intent != null) {
             Itinerario itinerario = (Itinerario) intent.getSerializableExtra(ItinerarioViewHolder.EXTRA_OBJETO_ITINERARIO);
             itinerario_elegido = itinerario.getId();
             setContentView(R.layout.activity_mapas);
-            ArrayList<Mapa> sitiosMapa = CiudadController.obtenerMapaDeItinerario(itinerario_elegido);
+            //ArrayList<Mapa> sitiosMapa = CiudadController.obtenerMapaDeItinerario(itinerario_elegido);
+            ArrayList<Mapa> sitiosMapa = ObtenerMapa(itinerario_elegido);
             if (savedInstanceState != null) {
                 lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
                 cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
             }
-        }
-        playButton = findViewById(R.id.playButton);
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isPlaying) {
-                    pauseAudio();
-                } else {
-                    playAudio();
-                }
+
+            playButton = findViewById(R.id.playButton);
+            botonDerecha = findViewById(R.id.bt_izquierda);
+            botonIzquierda = findViewById(R.id.bt_derecha);
+
+            //habilito places para crear las rutas
+            if (!Places.isInitialized()) {
+                Places.initialize(getApplicationContext(), getString(R.string.my_app_key));
+                placesClient = Places.createClient(this);
             }
-        });
-        //habilito places para crear las rutas
-        if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(),getString(R.string.my_app_key));
-            placesClient = Places.createClient(this);
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+            // obtengo los sitio del mapa
+            localizaciondefecto = sitiosMapa.get(0);
+            defaultLocation = new LatLng(localizaciondefecto.getX(),localizaciondefecto.getY());
+
+
+            botonDerecha.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ubicacionActual++;
+                    if (ubicacionActual >= sitiosMapa.size()) {
+                        ubicacionActual = 0; // Vuelve a la primera ubicación si no hay más ubicaciones
+                    }
+                    // Actualizar la ubicación en tu mapa o realizar otras acciones necesarias
+                    Mapa ubicacionSeleccionada = sitiosMapa.get(ubicacionActual);
+                    // Realizar acciones con la ubicación seleccionada
+                }
+            });
+            botonIzquierda.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ubicacionActual--;
+                    if (ubicacionActual < 0) {
+                        ubicacionActual = sitiosMapa.size() - 1; // Vuelve a la última ubicación si no hay más ubicaciones en la dirección izquierda
+                    }
+                    // Actualizar la ubicación en tu mapa o realizar otras acciones necesarias
+                    Mapa ubicacionSeleccionada = sitiosMapa.get(ubicacionActual);
+                    // Realizar acciones con la ubicación seleccionada
+                }
+            });
+            playButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isPlaying) {
+                        pauseAudio();
+                    } else {
+                        playAudio();
+                    }
+                }
+            });
         }
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
     }
     @Override
     public boolean onMarkerClick(Marker marker) {
-        String audioFileName = (String) marker.getTag();
+        Mapa mapa = (Mapa) marker.getTag();
+        if (mapa != null) {
+            String audioFileName = mapa.getNombreAudio();
+            if (audioFileName != null) {
+                // Obtener el identificador del recurso correspondiente al nombre del archivo de audio
+                int audioResourceId = getResources().getIdentifier(audioFileName, "raw", getPackageName());
 
-        if (audioFileName != null) {
-            // Obtener el identificador del recurso correspondiente al nombre del archivo de audio
-            int audioResourceId = getResources().getIdentifier(audioFileName, "raw", getPackageName());
-
-            if (audioResourceId != 0) {
-                // Reproducir el archivo de audio correspondiente
-                MediaPlayer mediaPlayer = MediaPlayer.create(this, audioResourceId);
-                mediaPlayer.start();
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                try {
+                    mediaPlayer.setDataSource(this, Uri.parse("android.resource://" + getPackageName() + "/" + audioResourceId));
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+                            // Reproducir el archivo de audio cuando esté preparado
+                            mp.start();
+                        }
+                    });
+                    mediaPlayer.prepareAsync();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    // Maneja la excepción de IO si ocurre
+                    // Muestra un mensaje de error o realiza acciones adicionales según sea necesario
+                }
             }
+
         }
         return false;
     }
@@ -479,15 +533,28 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
         }
     }
     private void playAudio() {
-        // Obtener el archivo de audio desde la base de datos MySQL
-        byte[] audioData = obtenerAudioDesdeMySQL();
-        // Guardar el archivo de audio localmente
-        File audioFile = guardarAudioLocalmente(audioData);
-        if (audioFile != null) {
-            mediaPlayer = MediaPlayer.create(this, Uri.fromFile(audioFile));
-            mediaPlayer.start();
-            isPlaying = true;
-            playButton.setImageResource(R.drawable.boton_pause);
+        if (ubicacionActual >= 0 && ubicacionActual < sitiosMapa.size()) {
+            Mapa ubicacionSeleccionada = sitiosMapa.get(ubicacionActual);
+            String audioFileName = ubicacionSeleccionada.getNombreAudio();
+
+            if (audioFileName != null) {
+                int audioResourceId = getResources().getIdentifier(audioFileName, "raw", getPackageName());
+
+                if (audioResourceId != 0) {
+                    mediaPlayer = MediaPlayer.create(this, audioResourceId);
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+                            // Cuando el audio termina de reproducirse
+                            isPlaying = false;
+                            playButton.setImageResource(R.drawable.boton_play);
+                        }
+                    });
+                    mediaPlayer.start();
+                    isPlaying = true;
+                    playButton.setImageResource(R.drawable.boton_pause);
+                }
+            }
         }
     }
     private void pauseAudio() {
@@ -497,32 +564,58 @@ public class Mapas extends AppCompatActivity implements GoogleMap.OnMyLocationBu
             playButton.setImageResource(R.drawable.boton_play);
         }
     }
-    private byte[] obtenerAudioDesdeMySQL() {
+    /*private byte[] obtenerAudioDesdeMySQL() {
         // Aquí deberás implementar la lógica para obtener los datos del archivo de audio desde MySQL
         // Esto implica establecer una conexión con la base de datos, ejecutar una consulta y recuperar el BLOB del archivo de audio
         // Devuelve los datos del archivo de audio en forma de byte[]
         return new byte[0];
-    }
-    private File guardarAudioLocalmente(byte[] audioData) {
-        File audioFile = null;
-        FileOutputStream outputStream = null;
-        try {
-            audioFile = File.createTempFile("temp_audio", ".mp3", getCacheDir());
-            outputStream = new FileOutputStream(audioFile);
-            outputStream.write(audioData);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (outputStream != null) {
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return audioFile;
+    }*/
+
+
         // [END maps_current_place_update_location_ui]
 //--------------------------------------------------------------------------------------------------------
+
+
+    private ArrayList<Mapa> MapasDesdeCSV() {
+        InputStream is = getResources().openRawResource(R.raw.mapas);
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(is, Charset.forName("UTF-8")));
+        String line = "";
+
+        ArrayList<Mapa> losMapas = new ArrayList<Mapa>();
+        try {
+            while ((line = reader.readLine()) != null) {
+                String[] datos = line.split(",");
+                String id = datos[0];
+                String nombre = datos[1];
+                double   x = Double.valueOf(datos[2]);
+                double y = Double.valueOf(datos[3]);
+                String id_ciudad = datos[4];
+                String nombreAudio = datos[5]; // Agregar el nombre del archivo de audio desde la columna correspondiente en el CSV
+                Mapa p = new Mapa(id, nombre, x, y, id_ciudad, nombreAudio);
+                losMapas.add(p);
+            }
+        } catch (IOException e1) {
+            System.out.println("no pude abrir el fichero de provincias");
+            Log.i("csv", "no pude abrir el fichero de provincias");
+        }
+        return losMapas;
     }
+
+    private ArrayList<Mapa> ObtenerMapa(String itinerarioSeleccionada) {
+        ArrayList<Mapa> mapas = new ArrayList<Mapa>();
+
+        for (Mapa p: sitiosMapa )
+        {
+            String nombre= p.getLocalizacion();
+            String codigoComunidad = p.getIdItinerario();
+            if(itinerarioSeleccionada.contains(codigoComunidad))
+            {
+                mapas.add(p);
+            }
+        }
+        return mapas;
+    }
+
+
 }

@@ -7,17 +7,28 @@
 
     tools:context=".activities.ListaItinerarios">
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="284dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="40dp"
+        android:text="Itinerarios Disponibles"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.606"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_itinerario"
         android:layout_width="389dp"
         android:layout_height="610dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/black"
         android:foregroundTint="@color/black"
         android:onClick="MostrarItinerario"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

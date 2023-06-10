@@ -7,7 +7,6 @@ import java.sql.Blob;
 import java.sql.SQLException;
 
 public class ImagenesBlobBitmap {
-
     //método que convierte un blob a un Bitmap
     public static Bitmap blob_to_bitmap(Blob b, int width, int height){
         Bitmap.Config config = Bitmap.Config.ARGB_8888;
@@ -21,7 +20,6 @@ public class ImagenesBlobBitmap {
         }
         return bitmap;
     }
-
     //método que convierte un blob a byte[]
     public static byte[] blob_to_bytes(Blob b){
         int blobLength = 0;
@@ -34,7 +32,6 @@ public class ImagenesBlobBitmap {
         }
         return blobAsBytes;
     }
-
     //método que convierte byte[] a bitmap
     public static Bitmap bytes_to_bitmap(byte[] b){
         Bitmap.Config config = Bitmap.Config.ARGB_8888;
@@ -42,6 +39,7 @@ public class ImagenesBlobBitmap {
         try{
             bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
         } catch (Exception e){
+
         }
         return bitmap;
     }

@@ -1,30 +1,45 @@
 package com.example.walktowalk.clases;
-import android.graphics.Bitmap;
 import java.io.Serializable;
 import java.util.Objects;
 public class Ciudad implements Serializable {
-    private int id;
+    private String id;
     private String nombre;
     private String descripcion;
+    private int imagenResId;
 
 
-    public Ciudad(int id, String nombre, String descripcion) {
+    public Ciudad(String id, String nombre, String descripcion) {
         this.id=id;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
+    public Ciudad(String id, String nombre, String descripcion, int imagenResId) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.imagenResId = imagenResId; // Inicializa la propiedad
+    }
+
 
     public Ciudad() {
-        this.id=(2)+this.id;
+        this.id="2";
         this.nombre = "sin nombre";
         this.descripcion = "sin descripcion";
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public int getImagenResId() {
+        return imagenResId;
+    }
+
+    public void setImagenResId(int imagenResId) {
+        this.imagenResId = imagenResId;
+    }
+
+    public void setId(String id) {
         this.id = id;
     }
 

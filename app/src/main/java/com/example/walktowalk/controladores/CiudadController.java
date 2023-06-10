@@ -1,10 +1,20 @@
 package com.example.walktowalk.controladores;
+import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.walktowalk.R;
 import com.example.walktowalk.clases.Ciudad;
 import com.example.walktowalk.clases.Itinerario;
 import com.example.walktowalk.clases.Mapa;
 import com.example.walktowalk.tareas.TareaBuscarItinerario;
 import com.example.walktowalk.tareas.TareaBuscarMapa;
 import com.example.walktowalk.tareas.TareaObtenerCiudad;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -35,8 +45,7 @@ public class CiudadController {
         }
         return ciudad;
     }
-
-    public static ArrayList<Itinerario> obtenerItinerarioDeCiudad(int ciudad_elegida) {
+    public static ArrayList<Itinerario> obtenerItinerarioDeCiudad(String ciudad_elegida) {
         ArrayList<Itinerario> itinerario = null;
         FutureTask t = new FutureTask (new TareaBuscarItinerario(ciudad_elegida));
         ExecutorService es = Executors.newSingleThreadExecutor();
@@ -58,8 +67,11 @@ public class CiudadController {
         }
         return itinerario;
     }
+    public static ArrayList<Itinerario> obtenerItinerarioDeCiudadCSV(int ciudad_elegida) {
 
-    public static ArrayList<Mapa> obtenerMapaDeItinerario(int itinerario_elegida) {
+        return null;
+    }
+    public static ArrayList<Mapa> obtenerMapaDeItinerario(String itinerario_elegida) {
         ArrayList<Mapa> mapa = null;
         FutureTask t = new FutureTask (new TareaBuscarMapa(itinerario_elegida));
         ExecutorService es = Executors.newSingleThreadExecutor();

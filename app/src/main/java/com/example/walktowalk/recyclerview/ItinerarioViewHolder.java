@@ -22,7 +22,6 @@ public class ItinerarioViewHolder extends RecyclerView.ViewHolder implements Vie
     public TextView txt_rv_itinerario_id_ciudad = null;
     public ImageView img_itinerario = null;
     ListaItinerarioAdapter lpAdapter;
-
     public ItinerarioViewHolder(@NonNull View itemView, ListaItinerarioAdapter lpAdapter) {
         super(itemView);
         txt_rv_itinerario_id = (TextView)  itemView.findViewById(R.id.txt_rv_itinerario_id);
@@ -30,11 +29,10 @@ public class ItinerarioViewHolder extends RecyclerView.ViewHolder implements Vie
         txt_rv_itinerario_descripcion = (TextView)  itemView.findViewById(R.id.txt_rv_itinerario_descripcion);
         txt_rv_itinerario_id_ciudad = (TextView)  itemView.findViewById(R.id.txt_rv_itinerarios_id_ciudad);
         txt_rv_itinerario_plazas = (TextView)  itemView.findViewById(R.id.txt_rv_plazas);
-        img_itinerario = (ImageView)  itemView.findViewById(R.id.img_item_ciudad);
+        img_itinerario = (ImageView)  itemView.findViewById(R.id.img_rv_itinerario);
         this.lpAdapter = lpAdapter;
         itemView.setOnClickListener(this);
     }
-
     @Override
     public void onClick(View view) {
         int mPosition = getAdapterPosition();

@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 
 public class FotoCiudadController {
     public static ArrayList<Fotos> obtenerFotosCiudades() {
-
         ArrayList<Fotos> fotosCiudades = null;
         FutureTask t = new FutureTask (new TareaObtenerFotosCiudades(100,100));
         ExecutorService es = Executors.newSingleThreadExecutor();
@@ -36,7 +35,6 @@ public class FotoCiudadController {
         return fotosCiudades;
     }
     public static ArrayList<Fotos> obtenerFotosItinerario() {
-
         ArrayList<Fotos> fotosItinerario = null;
         FutureTask t = new FutureTask (new TareaObtenerFotosItinerario(100,100));
         ExecutorService es = Executors.newSingleThreadExecutor();

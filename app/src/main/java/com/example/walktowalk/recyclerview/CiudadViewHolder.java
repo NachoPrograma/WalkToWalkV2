@@ -18,7 +18,6 @@ public class CiudadViewHolder extends RecyclerView.ViewHolder implements View.On
     public TextView txt_rv_ciudad_nombre = null;
     public ImageView img_ciudad = null;
     ListaCiudadAdapter lrAdapter;
-
     public CiudadViewHolder(@NonNull View itemView, ListaCiudadAdapter lrAdapter) {
         super(itemView);
         txt_rv_ciudad_id = (TextView)  itemView.findViewById(R.id.txt_rv_ciudad_id);
@@ -27,11 +26,9 @@ public class CiudadViewHolder extends RecyclerView.ViewHolder implements View.On
         this.lrAdapter = lrAdapter;
         itemView.setOnClickListener(this);
     }
-
     @Override
     public void onClick(View view) {
         int mPosition = getAdapterPosition();
-
         ArrayList<Ciudad> ciudades = this.lrAdapter.getListaCiudad();
         Ciudad ciudad = ciudades.get(mPosition);
         // lcAdapter.notifyDataSetChanged();

@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
     public void irLogin(View view) {
-        Intent intent = new Intent(this, Login.class);
+        Intent intent = new Intent(this, ListaCiudad.class);
         startActivity(intent);
     }
 }

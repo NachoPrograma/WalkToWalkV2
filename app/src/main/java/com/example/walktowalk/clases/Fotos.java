@@ -3,40 +3,32 @@ package com.example.walktowalk.clases;
 import android.graphics.Bitmap;
 
 public class Fotos {
-    private int idfoto;
+    private String idfoto;
     private Bitmap foto;
-    private int idciudad;
-
-    public Fotos(int idfoto, Bitmap foto, int idciudad) {
+    private String idciudad;
+    public Fotos(String idfoto, Bitmap foto, String idciudad) {
         this.idfoto = idfoto;
         this.foto = foto;
         this.idciudad = idciudad;
     }
-
-    public int getIdfoto() {
+    public String getIdfoto() {
         return idfoto;
     }
-
-    public void setIdfoto(int idfoto) {
+    public void setIdfoto(String idfoto) {
         this.idfoto = idfoto;
     }
-
     public Bitmap getFoto() {
         return foto;
     }
-
     public void setFoto(Bitmap foto) {
         this.foto = foto;
     }
-
-    public int getIdciudad() {
+    public String getIdciudad() {
         return idciudad;
     }
-
-    public void setIdciudad(int idciudad) {
+    public void setIdciudad(String idciudad) {
         this.idciudad = idciudad;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,7 +38,6 @@ public class Fotos {
                 idciudad == that.idciudad &&
                 foto.equals(that.foto);
     }
-
     @Override
     public String toString() {
         return "FotoCiudad{" +

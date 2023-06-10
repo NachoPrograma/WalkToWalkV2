@@ -1,58 +1,58 @@
 package com.example.walktowalk.clases;
 
 public class Mapa {
-    private int id;
+    private String id;
     private String localizacion;
-    private int x;
-    private int y;
-    private int idItinerario;
-
-    public Mapa(int id, String localizacion, int x, int y, int idItinerario) {
+    private double  x;
+    private double  y;
+    private String idItinerario;
+    private String nombreAudio;
+    public Mapa(String id, String localizacion, double  x, double  y, String idItinerario, String nombreAudio) {
         this.id = id;
         this.localizacion = localizacion;
         this.x = x;
         this.y = y;
         this.idItinerario = idItinerario;
+        this.nombreAudio=nombreAudio;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
-
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
-
     public String getLocalizacion() {
         return localizacion;
     }
-
     public void setLocalizacion(String localizacion) {
         this.localizacion = localizacion;
     }
-
-    public int getX() {
+    public double getX() {
         return x;
     }
-
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
-
-    public int getY() {
+    public double getY() {
         return y;
     }
-
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
-
-    public int getIdItinerario() {
+    public String getIdItinerario() {
         return idItinerario;
     }
-
-    public void setIdItinerario(int idItinerario) {
+    public void setIdItinerario(String idItinerario) {
         this.idItinerario = idItinerario;
+    }
+
+    public String getNombreAudio() {
+        return nombreAudio;
+    }
+
+    public void setNombreAudio(String nombreAudio) {
+        this.nombreAudio = nombreAudio;
     }
 }
 

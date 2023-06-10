@@ -1,7 +1,6 @@
 package com.example.walktowalk.modelo;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.walktowalk.clases.Itinerario;
 import com.example.walktowalk.clases.Ciudad;
@@ -32,12 +31,13 @@ public class CiudadDB {
             ResultSet resultado = sentencia.executeQuery(ordenSQL);
             while(resultado.next())
             {
-                int id = resultado.getInt("iditinerario");
+                String id = resultado.getString("iditinerario");
                 String nombre = resultado.getString("nombre");
                 String descripcion = resultado.getString("descripcion");
-                int plazas = resultado.getInt("plazas");
-                int idciudad = resultado.getInt("ciudad_idciudad");
-                Itinerario elItinerario = new Itinerario(id, nombre, descripcion, plazas,idciudad);
+                String  plazas = resultado.getString ("plazas");
+                String idciudad = resultado.getString("ciudad_idciudad");
+                int imagenResId= resultado.getInt("foto");
+                Itinerario elItinerario = new Itinerario(id, nombre, descripcion, plazas,idciudad,imagenResId);
                 itinerarios.add(elItinerario);
             }
             resultado.close();
@@ -60,10 +60,10 @@ public class CiudadDB {
             String ordenSQL = "select * from fotos_ciudades";
             ResultSet resultado = sentencia.executeQuery(ordenSQL);
             while (resultado.next()) {
-                int idfoto = resultado.getInt("idfoto");
+                String idfoto = resultado.getString("idfoto");
                 Blob foto = resultado.getBlob("foto");
                 Bitmap bm_foto = ImagenesBlobBitmap.blob_to_bitmap(foto, width, height);
-                int idciudad = resultado.getInt("idciudad");
+                String idciudad = resultado.getString("idciudad");
                 Fotos fc = new Fotos(idfoto, bm_foto, idciudad);
                 fotosCiudadesDevueltas.add(fc);
             }
@@ -118,7 +118,6 @@ public class CiudadDB {
         }
         return null;
     }
-
     public static ArrayList<Ciudad> obtenerCiudad() {
         Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
         if(conexion == null)
@@ -133,9 +132,10 @@ public class CiudadDB {
             ResultSet resultado = sentencia.executeQuery(ordenSQL);
             while(resultado.next())
             {
-                int id = resultado.getInt("idciudad");
+                String id = resultado.getString("idciudad");
                 String nombre = resultado.getString("nombre");
                 String descripcion = resultado.getString("descripcion");
+                String imagenResId= resultado.getString("foto");
                 Ciudad laCiudad = new Ciudad(id, nombre, descripcion);
                 ciudades.add(laCiudad);
             }
@@ -158,11 +158,11 @@ public class CiudadDB {
         try {
             String ordensql = "INSERT INTO itinerario (`iditinerario`,`nombre`,`nombre_ciudad`,`plazas`,`ciudad_idciudad`) VALUES (?,?,?,?,?);";
             PreparedStatement sentencia = conexion.prepareStatement(ordensql);
-            sentencia.setInt(1, p.getId());
+            sentencia.setString(1, p.getId());
             sentencia.setString(2, p.getNombre());
             sentencia.setString(3, p.getDescripcion());
-            sentencia.setInt(4, p.getPlazas());
-            sentencia.setInt(5, p.getIdciudad());
+            sentencia.setString (4, p.getPlazas());
+            sentencia.setString(5, p.getIdciudad());
             int filasafectadas = sentencia.executeUpdate();
             sentencia.close();
             conexion.close();
@@ -185,7 +185,6 @@ public class CiudadDB {
             return false;
         }
         try {
-
             String ordensql = "DELETE FROM `itinerario` WHERE (`iditinerario` = ?);";
             PreparedStatement sentencia = conexion.prepareStatement(ordensql);
             sentencia.setInt(1, id);
@@ -204,7 +203,6 @@ public class CiudadDB {
             return false;
         }
     }
-
     public static boolean actualizarItinerario(Itinerario p, String itinerarioAntiguo) {
         Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
         if(conexion == null)
@@ -214,10 +212,10 @@ public class CiudadDB {
         try {
             String ordensql = "UPDATE itinerario SET iditinerario = ?, nombre = ?,nombre_ciudad = ?,plazas = ?,ciudad_idciudad = ? WHERE iditinerario = ?";
             PreparedStatement pst = conexion.prepareStatement(ordensql);
-            pst.setInt(1, p.getId());
+            pst.setString(1, p.getId());
             pst.setString(2, p.getNombre());
             pst.setString(3, p.getDescripcion());
-            pst.setInt(4, p.getPlazas());
+            pst.setString (4, p.getPlazas());
             pst.setString(5, itinerarioAntiguo);
             int filasAfectadas = pst.executeUpdate();
             pst.close();
@@ -233,8 +231,7 @@ public class CiudadDB {
             return false;
         }
     }
-
-    public static ArrayList<Itinerario> obtenerPorCiudad(int ciudad) {
+    public static ArrayList<Itinerario> obtenerPorCiudad(String ciudad) {
         Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
         if(conexion == null)
         {
@@ -244,19 +241,20 @@ public class CiudadDB {
         ArrayList<Itinerario> itinerarios = new ArrayList<Itinerario>();
         try {
             String ordenSQL = "SELECT * FROM itinerario WHERE ciudad_idciudad like ? ORDER BY iditinerario";
-
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
-            sentencia.setInt(1, ciudad);
+            sentencia.setString(1, ciudad);
 
             ResultSet resultado = sentencia.executeQuery();
             while(resultado.next())
             {
-                int id = resultado.getInt("iditinerario");
+                String id = resultado.getString("iditinerario");
                 String nombre = resultado.getString("nombre");
                 String descripcion=resultado.getString("descripcion");
-                int plazas = resultado.getInt("plazas");
-                int id_ciudad = resultado.getInt("ciudad_idciudad");
-                Itinerario elItinerario = new Itinerario(id, nombre, descripcion, plazas, id_ciudad);
+                String  plazas = resultado.getString ("plazas");
+                String id_ciudad = resultado.getString("ciudad_idciudad");
+                int imagenResId= resultado.getInt("foto");
+
+                Itinerario elItinerario = new Itinerario(id, nombre, descripcion, plazas, id_ciudad, imagenResId);
                 itinerarios.add(elItinerario);
             }
             resultado.close();
@@ -268,8 +266,7 @@ public class CiudadDB {
             return itinerarios;
         }
     }
-
-    public static ArrayList<Mapa> obtenerPorItinerario(int itinerario) {
+    public static ArrayList<Mapa> obtenerPorItinerario(String itinerario) {
         Connection conexion = ConfiguracionDB.conectarConBaseDeDatos();
         if(conexion == null)
         {
@@ -281,17 +278,18 @@ public class CiudadDB {
             String ordenSQL = "SELECT * FROM mapa WHERE idItinerario like ? ORDER BY idmapa";
 
             PreparedStatement sentencia = conexion.prepareStatement(ordenSQL);
-            sentencia.setInt(1, itinerario);
+            sentencia.setString(1, itinerario);
 
             ResultSet resultado = sentencia.executeQuery();
             while(resultado.next())
             {
-                int id = resultado.getInt("idmapa");
+                String id = resultado.getString("idmapa");
                 String localizacion = resultado.getString("nombre");
                 int x = resultado.getInt("longitud");
                 int y = resultado.getInt("latitud");
-                int id_itinerario = resultado.getInt("itinerario_iditinerario");
-                Mapa elMapa = new Mapa(id, localizacion, x, y, id_itinerario);
+                String id_itinerario = resultado.getString("itinerario_iditinerario");
+                String audio=resultado.getString("audio");
+                Mapa elMapa = new Mapa(id, localizacion, x, y, id_itinerario,audio);
                 mapas.add(elMapa);
             }
             resultado.close();
@@ -303,7 +301,4 @@ public class CiudadDB {
             return mapas;
         }
     }
-
-
-
 }
